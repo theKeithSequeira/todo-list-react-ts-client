@@ -28,7 +28,7 @@ I'm a full stack developer...
 Clone the project
 
 ```bash
-  git clone https://link-to-project
+  git clone https://github.com/theKeithSequeira/todo-list-react-ts-client.git
 ```
 
 Go to the project directory
