@@ -1,24 +1,28 @@
-import React from 'react';
-import './App.css';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
-import EditToDo from './components/EditToDo';
-import ToDoList from './components/ToDoList';
-import Typography from '@mui/material/Typography';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-
+import React, { useEffect, useState } from "react";
+import "./App.css";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import EditToDo from "./components/EditToDo";
+import Todos from "./components/TodoList";
+import Typography from "@mui/material/Typography";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import Container from "@mui/material/Container";
+import { useDispatch } from "react-redux";
+import { fetchAllTodoActionCreator } from "./state/action-creators/todos";
 
 function App() {
+  const [todos, setTodos] = useState([]);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchAllTodoActionCreator());
+    // return () => {};
+  }, [dispatch]);
+
   return (
     <>
       <Container>
@@ -43,7 +47,13 @@ function App() {
                   </Typography>
 
                   <Link to="/edit">
-                    <Button sx={{ color: "secondary" }} variant="contained" color="secondary">Edit To Do List</Button>
+                    <Button
+                      sx={{ color: "secondary" }}
+                      variant="contained"
+                      color="secondary"
+                    >
+                      Edit To Do List
+                    </Button>
                   </Link>
                 </Toolbar>
               </AppBar>
@@ -55,7 +65,7 @@ function App() {
             </Route>
 
             <Route path="/">
-              <ToDoList />
+              <Todos />
             </Route>
           </Switch>
         </Router>
