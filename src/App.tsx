@@ -11,17 +11,33 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
-import { useDispatch } from "react-redux";
-import { fetchAllTodoActionCreator } from "./state/action-creators/todos";
+import { useDispatch, useSelector } from "react-redux";
+import { bindActionCreators } from "redux";
+import { fetchAllTodoActionsCreator } from "./state/action-creators/todos";
+import { RootState } from "./state/reducers";
+import * as actionCreators from "./state/action-creators/todos";
 
 function App() {
-  const [todos, setTodos] = useState([]);
+  const todos = useSelector((state: RootState) => state);
+  console.log(todos);
+
   const dispatch = useDispatch();
+  /*  const {
+    createTodoActionCreator,
+    updateTodoActionCreator,
+    deleteTodoActionCreator,
+    selectTodoActionCreator,
+    toggleTodoActionCreator,
+    fetchAllTodoActionsCreator,
+  } = bindActionCreators(actionCreators, dispatch); */
 
   useEffect(() => {
-    dispatch(fetchAllTodoActionCreator());
-    // return () => {};
-  }, [dispatch]);
+    console.log(
+      fetchAllTodoActionsCreator(dispatch).then((data) => console.log(data))
+    );
+
+    //   // return () => {};
+  }, []);
 
   return (
     <>

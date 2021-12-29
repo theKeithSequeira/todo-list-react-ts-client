@@ -9,7 +9,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import reducers from "./state/reducers";
 
-const store = createStore(reducers, compose(applyMiddleware(thunk)));
+const store = createStore(reducers, {}, compose(applyMiddleware(thunk)));
 
 ReactDOM.render(
   <React.StrictMode>

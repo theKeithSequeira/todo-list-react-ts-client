@@ -33,7 +33,7 @@ export const updateTodoActionCreator = (todo: ITodo) => {
   };
 };
 
-export const DeleteTodoActionCreator = (id: string) => {
+export const deleteTodoActionCreator = (id: string) => {
   return (dispatch: Dispatch<TodoActionType>) => {
     dispatch({
       type: ActionType.DELETE_TODO,
@@ -42,7 +42,7 @@ export const DeleteTodoActionCreator = (id: string) => {
   };
 };
 
-export const SelectTodoActionCreator = (id: string) => {
+export const selectTodoActionCreator = (id: string) => {
   return (dispatch: Dispatch<TodoActionType>) => {
     dispatch({
       type: ActionType.SELECT_TODO,
@@ -60,7 +60,7 @@ export const toggleTodoActionCreator = (todo: ITodo) => {
   };
 };
 
-export const fetchAllTodoActionCreator = async () => {
+/* export const fetchAllTodoActionsCreator = async () => {
   try {
     const data = await fetchTodos();
     return (dispatch: Dispatch<TodoActionType>) => {
@@ -69,6 +69,22 @@ export const fetchAllTodoActionCreator = async () => {
         payload: data,
       });
     };
+  } catch (error: any) {
+    console.error(error.message);
+  }
+}; */
+
+export const fetchAllTodoActionsCreator = async (
+  dispatch: Dispatch<TodoActionType>
+) => {
+  try {
+    const data = await fetchTodos();
+    dispatch({
+      type: ActionType.FETCH_ALL_TODOS,
+      payload: data,
+    });
+
+    // eslint-disable-next-line no-unreachable
   } catch (error: any) {
     console.error(error.message);
   }
