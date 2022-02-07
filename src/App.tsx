@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import EditToDo from "./components/EditToDo";
-import Todos from "./components/TodoList";
+import TodoList from "./components/TodoList";
 import Typography from "@mui/material/Typography";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -11,33 +11,15 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
-import { useDispatch, useSelector } from "react-redux";
-import { bindActionCreators } from "redux";
+import { useDispatch } from "react-redux";
 import { fetchAllTodoActionsCreator } from "./state/action-creators/todos";
-import { RootState } from "./state/reducers";
-import * as actionCreators from "./state/action-creators/todos";
 
 function App() {
-  const todos = useSelector((state: RootState) => state);
-  console.log(todos);
-
   const dispatch = useDispatch();
-  /*  const {
-    createTodoActionCreator,
-    updateTodoActionCreator,
-    deleteTodoActionCreator,
-    selectTodoActionCreator,
-    toggleTodoActionCreator,
-    fetchAllTodoActionsCreator,
-  } = bindActionCreators(actionCreators, dispatch); */
 
   useEffect(() => {
-    console.log(
-      fetchAllTodoActionsCreator(dispatch).then((data) => console.log(data))
-    );
-
-    //   // return () => {};
-  }, []);
+    console.log(dispatch(fetchAllTodoActionsCreator()));
+  }, [dispatch]);
 
   return (
     <>
@@ -81,7 +63,7 @@ function App() {
             </Route>
 
             <Route path="/">
-              <Todos />
+              <TodoList />
             </Route>
           </Switch>
         </Router>

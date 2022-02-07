@@ -1,4 +1,4 @@
-import { ITodo } from "../../type";
+import { Todo } from "../../type";
 import { ActionType } from "../action-types/todos";
 
 export interface fetchAllTodosActionType {
@@ -8,7 +8,7 @@ export interface fetchAllTodosActionType {
 
 export interface CreateTodoActionType {
   type: typeof ActionType.CREATE_TODO;
-  payload: ITodo;
+  payload: Todo;
 }
 
 export interface DeleteTodoActionType {
@@ -30,7 +30,12 @@ export interface ToggleTodoActionType {
 
 export interface UpdateTodoActionType {
   type: typeof ActionType.UPDATE_TODO;
-  payload: ITodo;
+  payload: Todo;
+}
+
+export interface SetTodosActionType {
+  type: typeof ActionType.SET_TODOS;
+  payload: Todo[];
 }
 
 export type TodoActionType =
@@ -39,4 +44,5 @@ export type TodoActionType =
   | SelectTodoActionType
   | DeleteTodoActionType
   | UpdateTodoActionType
-  | fetchAllTodosActionType;
+  | fetchAllTodosActionType
+  | SetTodosActionType;

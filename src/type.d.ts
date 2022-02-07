@@ -1,4 +1,4 @@
-export interface ITodo {
+export interface Todo {
   id: string;
   title: string;
   desc: string;
@@ -6,6 +6,5 @@ export interface ITodo {
 }
 
 export type TodoState = {
-  todos: ITodo[];
-  selectedTodo: string;
+  todos: Todo[];
 };

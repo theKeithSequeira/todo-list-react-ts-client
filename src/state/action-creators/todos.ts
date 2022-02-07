@@ -1,91 +1,75 @@
+import { Action, Dispatch } from "redux";
+import { ThunkAction } from "redux-thunk";
 import { v1 as uuidv1 } from "uuid";
-import { Dispatch } from "redux";
 import { fetchTodos } from "../../api";
-import { ITodo } from "../../type";
+import { Todo, TodoState } from "../../type";
 import { ActionType } from "../action-types/todos";
-import { TodoActionType } from "../actions/todos";
+import {
+  CreateTodoActionType,
+  DeleteTodoActionType,
+  SelectTodoActionType,
+  SetTodosActionType,
+  ToggleTodoActionType,
+  UpdateTodoActionType,
+} from "../actions/todos";
 
-export const createTodoActionCreator = (todo: ITodo) => {
-  return (dispatch: Dispatch<TodoActionType>) => {
-    dispatch({
-      type: ActionType.CREATE_TODO,
-      payload: {
-        id: uuidv1(),
-        title: todo.title,
-        desc: todo.desc,
-        isComplete: todo.isComplete,
-      },
-    });
+export const createTodoActionCreator = (todo: Todo): CreateTodoActionType => {
+  return {
+    type: ActionType.CREATE_TODO,
+    payload: {
+      id: uuidv1(),
+      title: todo.title,
+      desc: todo.desc,
+      isComplete: todo.isComplete,
+    },
   };
 };
 
-export const updateTodoActionCreator = (todo: ITodo) => {
-  return (dispatch: Dispatch<TodoActionType>) => {
-    dispatch({
-      type: ActionType.UPDATE_TODO,
-      payload: {
-        id: todo.id,
-        title: todo.title,
-        desc: todo.desc,
-        isComplete: todo.isComplete,
-      },
-    });
+export const updateTodoActionCreator = (todo: Todo): UpdateTodoActionType => {
+  return {
+    type: ActionType.UPDATE_TODO,
+    payload: {
+      id: todo.id,
+      title: todo.title,
+      desc: todo.desc,
+      isComplete: todo.isComplete,
+    },
   };
 };
 
-export const deleteTodoActionCreator = (id: string) => {
-  return (dispatch: Dispatch<TodoActionType>) => {
-    dispatch({
-      type: ActionType.DELETE_TODO,
-      payload: { id },
-    });
+export const deleteTodoActionCreator = (id: string): DeleteTodoActionType => {
+  return {
+    type: ActionType.DELETE_TODO,
+    payload: { id },
   };
 };
 
-export const selectTodoActionCreator = (id: string) => {
-  return (dispatch: Dispatch<TodoActionType>) => {
-    dispatch({
-      type: ActionType.SELECT_TODO,
-      payload: { id },
-    });
+export const selectTodoActionCreator = (id: string): SelectTodoActionType => {
+  return {
+    type: ActionType.SELECT_TODO,
+    payload: { id },
   };
 };
 
-export const toggleTodoActionCreator = (todo: ITodo) => {
-  return (dispatch: Dispatch<TodoActionType>) => {
-    dispatch({
-      type: ActionType.TOGGLE_TODO,
-      payload: { id: todo.id, isComplete: todo.isComplete },
-    });
+export const toggleTodoActionCreator = (todo: Todo): ToggleTodoActionType => {
+  return {
+    type: ActionType.TOGGLE_TODO,
+    payload: { id: todo.id, isComplete: todo.isComplete ? true : false },
   };
 };
 
-/* export const fetchAllTodoActionsCreator = async () => {
-  try {
-    const data = await fetchTodos();
-    return (dispatch: Dispatch<TodoActionType>) => {
-      dispatch({
-        type: ActionType.FETCH_ALL_TODOS,
-        payload: data,
-      });
-    };
-  } catch (error: any) {
-    console.error(error.message);
-  }
-}; */
+export const fetchAllTodoActionsCreator =
+  (): ThunkAction<void, TodoState, unknown, Action<string>> | Error =>
+  async (dispatch: Dispatch) => {
+    try {
+      const todos: Todo[] = await fetchTodos();
+      dispatch(setTodos(todos));
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-export const fetchAllTodoActionsCreator = async (
-  dispatch: Dispatch<TodoActionType>
-) => {
-  try {
-    const data = await fetchTodos();
-    dispatch({
-      type: ActionType.FETCH_ALL_TODOS,
-      payload: data,
-    });
-
-    // eslint-disable-next-line no-unreachable
-  } catch (error: any) {
-    console.error(error.message);
-  }
-};
+const setTodos = (todos: Todo[]): SetTodosActionType => ({
+  type: ActionType.SET_TODOS,
+  payload: todos,
+});

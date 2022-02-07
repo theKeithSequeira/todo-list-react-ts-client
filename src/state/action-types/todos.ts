@@ -5,4 +5,5 @@ export enum ActionType {
   DELETE_TODO = "DELETE_TODO",
   TOGGLE_TODO = "TOGGLE_TODO",
   SELECT_TODO = "SELECT_TODO",
+  SET_TODOS = "SET_TODOS",
 }
